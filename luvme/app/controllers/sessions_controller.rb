@@ -1,7 +1,9 @@
 class SessionsController < ApplicationController
 
-	APP_ID = ENV['FACEBOOK_APP_ID']
-	APP_SECRET = ENV['FACEBOOK_APP_SECRET']
+	# APP_ID = ENV['FACEBOOK_APP_ID']
+	# APP_SECRET = ENV['FACEBOOK_APP_SECRET']
+
+	#NEED TO ADD ID & SECRET BEFORE TESTING
 
 	def new
 		base_url ='https://www.facebook.com/dialog/oauth'
@@ -22,11 +24,10 @@ class SessionsController < ApplicationController
 		code = params[:code]
   	state = params[:state]
   	if session[:auth_state] == state
-  		"we're in!"
   		url = "https://graph.facebook.com/v2.3/oauth/access_token?"
   		data = {
-  			client_id: CLIENT_ID,
-  			client_secret: CLIENT_SECRET,
+  			client_id: APP_ID,
+  			client_secret: APP_SECRET,
   			code: code,
   			redirect_uri: 'http://7bc3eef2.ngrok.io/create'
   		}
@@ -34,12 +35,15 @@ class SessionsController < ApplicationController
   			:Accept => :json
   		}
   		fb_response = RestClient.post(url, data, headers)
-  		binding.pry
-  		session[:access_token] = JSON.parse(github_response)["access_token"]
-  		redirect '/profile'
+  		session[:access_token] = JSON.parse(fb_response)["access_token"]
+  		redirect_to '/profile'
   	else
   		"we've been tampered with"
+
+  		# need to do a rerequest to follow up on denied or modified scope permissions
+
   	end
 	end
+
 
 end#SC

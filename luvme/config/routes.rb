@@ -4,9 +4,15 @@ Rails.application.routes.draw do
 
   resources :sessions, only: [:new, :create, :profile, :destroy]
 
-  get   '/create' => 'sessions#create'
-  get   '/profile' => 'sessions#profile'
-  delete '/login' => 'sessions#destroy'
+  resources :viewers, only: [:profile, :preferences, :update, :destroy]
+
+  get   '/create' => 'sessions#create' #oauth_callback
+  get   '/profile' => 'viewers#profile' #show/edit
+  get   '/preferences' => 'viewers#profile' #show/edit
+  #updates both profile and preferences based on params, assuming we save to DB
+  patch '/profile/:id' => 'viewers#profile_update', as: 'viewer_update'
+  #kill session
+  delete '/login' => 'viewers#destroy'
 
   resources :users
 
