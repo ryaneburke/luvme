@@ -1,46 +1,47 @@
 class ViewersController < ApplicationController
+	# before_action :authorize
 	
-	def profile #show/edit route
-		headers = {
-			:Authorization => "OAuth #{session[:access_token]}"
-		}
-		url = "https://graph.facebook.com/v2.4/me?fields=first_name,gender,location,albums,picture{url}"
-		@user = JSON.parse( RestClient.get(url, headers) )
-		profile_pics = parse_profile_pics(@user)
-		session[:profile_album_id] = profile_pics['id']
-		#going to use this [:profile_album_id] at a later date to get all of the profile pictures if viewer converts to user
+	# def new
+	# #API call to get relevant veiwer data
+	# 	headers = {
+	# 		:Authorization => "OAuth #{session[:access_token]}"
+	# 	}
+	# 	url = "https://graph.facebook.com/v2.4/me?fields=first_name,gender,location,albums,picture{url}"
+	# 	@viewer = JSON.parse( RestClient.get(url, headers) )
+		
+	# #new_viewer object
+	# 	new_viewer = Viewer.new({
+	# 		fname: @viewer['first_name'],
+	# 		gender: @viewer['gender'],
+	# 		location: @viewer['location']
+	# 		profile_album_url: parse_profile_pics(@viewer)
+	# 	})
+	# #saving new_viewer to DB
+	# 	if new_viewer.save
+	# 		render :profile
+	# 	else
+	# 		redirect_to "/users/#{session[:app_id]}/viewers/new"
+	# 	end
+	# #need to build redirect if gender doesn't match target gender
+	# end
 
-		#need to do something with name, location, gender >> send to DB, Users table, type: Viewer?
+	# def preferences
+	# 	render :preferences
+	# end
 
-		#need to build redirect if gender doesn't match target gender
-		render :profile
-	end
+	# private
 
-	def preferences #show/edit route
-		render :preferences
-	end
+	# def parse_profile_pics(response)
+	# 	albums = response['albums']['data']
+	# 	albums.each do |album|
+	# 		if album['name'] == 'Profile Pictures'
+	# 			pp = album
+	# 		end
+	# 		pp
+	# 	end
+	# end
 
-	def update 
-	#if i actually save to DB and not hold everything in sessions
-	end
-
-	def destroy
-	#if i actually save to DB and not hold everything in sessions
-	end
-
-
-	private
-
-	def parse_profile_pics(response)
-		albums = response['albums']['data']
-		albums.each do |album|
-			if album['name'] == 'Profile Pictures'
-				pp = album
-			end
-			pp
-		end
-	end
 
 	# finds the first album which may not always be the profile album >> url = "https://graph.facebook.com/v2.4/me?fields=first_name,gender,location,albums.limit(1){photos.limit(10){name,link}}"
-	
+
 end#VC
