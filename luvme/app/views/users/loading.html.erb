@@ -1,0 +1,7 @@
+<h1>Loading</h1>
+
+<% if @current_user.admin? %>
+	<a href='/users/<%= @current_user.referrer_id %>/share'>to Share</a>
+<% else %>
+	<a href='/users/<%= session[:referrer_id] %>/share'>to Share</a>
+<% end %>

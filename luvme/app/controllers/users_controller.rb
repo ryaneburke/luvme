@@ -1,32 +1,68 @@
 class UsersController < ApplicationController
 
-	def new
-		if !session[:app_id]
-		#API call to get relevant User data
-			headers = {
-				:Authorization => "OAuth #{session[:access_token]}"
-			}
-			url = "https://graph.facebook.com/v2.4/me?fields=first_name,gender,location,albums"
-			@user = JSON.parse( RestClient.get(url, headers) )
-		#new_user object
-			new_user = User.new({
-				fname: @user['first_name'],
-				gender: @user['gender'],
-				location: @user['location'],
-				profile_album_id: parse_profile_album_id(@user),
-				type: 'Admin'
-			})
-		#saving new_user to DB
-			if new_user.save
-				session[:user_id] = new_user.user_id
-				render :profile
+	#refactor User.new to Admin.new
+
+	def new #profile
+	#API call to get relevant User data
+		headers = {
+			:Authorization => "OAuth #{session[:access_token]}"
+		}
+		url = "https://graph.facebook.com/v2.4/me?fields=first_name,gender,location,albums"
+		@fb_response = JSON.parse( RestClient.get(url, headers) )
+		binding.pry
+		user = User.find_by({profile_album_id: parse_profile_album_id(@fb_response)})
+	#does the user already exist in the DB?
+		if user
+			#did user come in with a referrer_id?
+			#send user to browse
+			if session[:referrer_id]
+				session[:user_id] = user.id
+				redirect_to "/browse"
 			else
-				redirect_to "/users/new"
+			#if they didn't come here to look, they came here to make
+			#send them to profile so they can make their own version	
+				@user = user
+				session[:user_id] = @user.id
+				render :profile
 			end
-		#need to build redirect if gender doesn't match target gender
+		else
+			#user doesn't exist and doesn't have a referrer_id
+			#create a new Admin, send to profile
+			if !session[:referrer_id]
+				#new_user object
+				@user = Admin.new({
+					fname: @fb_response['first_name'],
+					gender: @fb_response['gender'],
+					location: @fb_response['location'],
+					profile_album_id: parse_profile_album_id(@fb_response)
+				})
+				if @user.save
+					session[:user_id] = @user.id
+					@user
+					render :profile
+				else
+					redirect_to "/users/new"
+				end
+			else
+			#user doesn't exist but has a referrer_id
+			#create a new Viewer, send to profile	
+				@user = Viewer.new({
+					fname: @fb_response['first_name'],
+					gender: @fb_response['gender'],
+					location: @fb_response['location'],
+					profile_album_id: parse_profile_album_id(@fb_response)
+				})
+				if @user.save
+					session[:user_id] = @user.id
+					@user
+					render :profile
+				else
+					redirect_to "/users/new"
+				end
+			end	
 		end
 	end
-
+		
 	def photos
 	#repull current_user object out of DB
 		current_user
@@ -34,36 +70,61 @@ class UsersController < ApplicationController
 		headers = {
 			:Authorization => "OAuth #{session[:access_token]}"
 		}
-		url = "#{user.profile_album_id}/photos?fields=images&limit=10"
-		fb_response = JSON.parse( RestClient.get(url, headers) )
-
-		@photo_array = parse_profile_photos(fb_response)
+		url = "#{@current_user.profile_album_id}/photos?fields=images&limit=10"
+		@fb_response = JSON.parse( RestClient.get(url, headers) )
+		@photo_array = parse_profile_photos(@fb_response)
 		create_and_save_photo_entries(@photo_array)
 		render :photos
 	end
 
+	def prefs
+		current_user
+		render :prefs
+	end
+
 	def loading
+		current_user
+		@referrer_id = session[:referrer_id]
 		render :loading
 	end
 
 	def share
+		current_user
+		session[:referrer_id] = current_user.referrer_id
 		render :share
 	end
 
-	def show
-		render :show
+	def browse
+		if session[:referrer_id]
+			@admin = Admin.find({referrer_id: session[:referrer_id]})
+			@photos = @admin.photos.pluck(:img_url)
+		end
+	end
+
+	def convert
+		render :convert
+	end
+
+	def switch_types
+		current_user
+		@current_user.type = 'admin'
+		if @current_user.save
+			session[:referrer_id] = nil
+			redirect_to '/users/<%= @current_user.id %>/photos'
+		else
+			render :'/errors/switch'
+		end
+	end
+
+
 	end
 	
 	private
 
 	def parse_profile_album_id(response)
 		albums = response['albums']['data']
-		albums.each do |album|
-			if album['name'] == 'Profile Pictures'
-				pp = album #probably should be album['id']
-			end
-			pp
-		end
+		profile_album = albums.select{|album| album['name'] == "Profile Pictures"}
+		profile_album[0]['id']
 	end
 
 	def parse_profile_photos(response, width)
@@ -89,4 +150,4 @@ class UsersController < ApplicationController
 		end
 	end
 
-end
+end#UC

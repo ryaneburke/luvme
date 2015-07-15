@@ -1,0 +1,18 @@
+<h1>profile</h1>
+
+<!-- link helper for user object -->
+<!-- temporary data render -->
+<p>Look good?</p>
+<p><%= @user.fname %></p>
+<p><%= @user.location %></p>
+<p><%= @user.gender %></p>
+
+<h2>debugging</h2>
+<p>FB RESPONSE: <%= @fb_response %></p>
+<p> USER OBJECT: <%= @user %></p>
+
+<!-- ajax: post route, methodoverride, to update -->
+<button><a href="/users/<%=@user.id%>">Update my changes</button>
+
+<!-- ajax: get route -->
+<button><a href="/users/<%=@user.id%>/photos">go to Photos</a></button>
