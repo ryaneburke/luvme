@@ -32,7 +32,7 @@ class SessionsController < ApplicationController
 	end
 
 	def create
-	#need:: check to see if status code is a redirect, if yes, proceed, if not, redirect away
+	#need:: check to see if request is coming from facebook API, if yes, proceed, if not, redirect away
 		code = params[:code]
   	state = params[:state]
   	if session[:auth_state] == state

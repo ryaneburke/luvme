@@ -29,7 +29,7 @@ class UsersController < ApplicationController
 
 	def photos
 	#repull current_user object out of DB
-		@user = User.find(session[:user_id])
+		current_user
 	#API call to get profile photos
 		headers = {
 			:Authorization => "OAuth #{session[:access_token]}"
@@ -60,7 +60,7 @@ class UsersController < ApplicationController
 		albums = response['albums']['data']
 		albums.each do |album|
 			if album['name'] == 'Profile Pictures'
-				pp = album
+				pp = album #probably should be album['id']
 			end
 			pp
 		end
