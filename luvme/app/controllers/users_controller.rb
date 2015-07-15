@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
 
-	#refactor User.new to Admin.new
 
 	def new #profile
 	#API call to get relevant User data
@@ -34,8 +33,8 @@ class UsersController < ApplicationController
 					fname: @fb_response['first_name'],
 					gender: @fb_response['gender'],
 					location: @fb_response['location'],
-					profile_album_id: parse_profile_album_id(@fb_response)
 				})
+				@user.assign_profile_album_id(@fb_response)
 				if @user.save
 					session[:user_id] = @user.id
 					@user
@@ -50,8 +49,8 @@ class UsersController < ApplicationController
 					fname: @fb_response['first_name'],
 					gender: @fb_response['gender'],
 					location: @fb_response['location'],
-					profile_album_id: parse_profile_album_id(@fb_response)
 				})
+				@user.assign_profile_album_id(@fb_response)
 				if @user.save
 					session[:user_id] = @user.id
 					@user
@@ -120,12 +119,6 @@ class UsersController < ApplicationController
 	end
 	
 	private
-
-	def parse_profile_album_id(response)
-		albums = response['albums']['data']
-		profile_album = albums.select{|album| album['name'] == "Profile Pictures"}
-		profile_album[0]['id']
-	end
 
 	def parse_profile_photos(response, width)
 		photo_array = []

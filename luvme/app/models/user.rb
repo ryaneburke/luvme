@@ -1,7 +1,6 @@
 class User < ActiveRecord::Base
 	
 	before_save :assign_referrer_id
-	# before_save :parse_profile_album_id
 
 	def admin?
 		self.type == 'admin'
@@ -15,7 +14,7 @@ class User < ActiveRecord::Base
 		self.referrer_id = SecureRandom.urlsafe_base64()
 	end
 
-	def assign_profile_album_id
+	def assign_profile_album_id(response)
 		self.profile_album_id = parse_profile_album_id(response)
 	end
 
@@ -24,6 +23,8 @@ class User < ActiveRecord::Base
 		profile_album = albums.select{|album| album['name'] == "Profile Pictures"}
 		profile_album[0]['id']
 	end
+
+
 
 	# set the profile_album_id: 197398721
 	# profile_album_id: parse_profile_album_id(@user)
