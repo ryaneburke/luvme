@@ -18,10 +18,10 @@ class UsersController < ApplicationController
 				redirect_to "/browse"
 			else
 			#if they didn't come here to look, they came here to make
-			#send them to profile so they can make their own version	
+			#send them to photos so they can make their own version	
 				@user = user
 				session[:user_id] = user.id
-				render :profile
+				redirect_to "/users/#{session[:user_id]}/photos"
 			end
 		else
 			#user doesn't exist and doesn't have a referrer_id
@@ -37,7 +37,7 @@ class UsersController < ApplicationController
 				if @user.save
 					session[:user_id] = @user.id
 					@user
-					render :profile
+					redirect_to "/users/#{@user.id}/photos"
 				else
 					redirect_to "/users/new"
 				end
@@ -53,30 +53,15 @@ class UsersController < ApplicationController
 				if @user.save
 					session[:user_id] = @user.id
 					@user
-					render :profile
+					redirect_to "/users/#{@user.id}/prefs"
 				else
 					redirect_to "/users/new"
 				end
 			end	
 		end
 	end
-
-	def update
-		@user = User.find(params['id'])
-		@user.update({
-			fname: params['fname'],
-			location: params['location'],
-			gender: params['gender'] 
-		})
-		if @user.admin?
-			redirect_to "/users/#{@user.id}/photos"
-		else
-			redirect_to "/users/#{@user.id}/prefs"
-		end
-	end
 		
 	def photos
-
 	#repull current_user object out of DB
 		current_user
 	#API call to get profile photos
@@ -128,6 +113,25 @@ class UsersController < ApplicationController
 			redirect_to '/users/<%= @current_user.id %>/photos'
 		else
 			render :'/errors/switch'
+		end
+	end
+
+	def profile
+		current_user
+		render :profile
+	end
+
+	def update
+		@user = User.find(params['id'])
+		@user.update({
+			fname: params['fname'],
+			location: params['location'],
+			gender: params['gender'] 
+		})
+		if @user.admin?
+			redirect_to "/users/#{@user.id}/photos"
+		else
+			redirect_to "/users/#{@user.id}/prefs"
 		end
 	end
 	
