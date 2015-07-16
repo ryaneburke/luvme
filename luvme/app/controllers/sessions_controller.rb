@@ -1,9 +1,10 @@
 class SessionsController < ApplicationController
 
-	APP_ID = Rails.application.secrets.facebook_app_id
-	APP_SECRET = Rails.application.secrets.facebook_app_secret
+	# APP_ID = Rails.application.secrets.facebook_app_id
+	# APP_SECRET = Rails.application.secrets.facebook_app_secret
 
-	#NEED TO ADD ID & SECRET BEFORE TESTING
+	APP_ID = ENV['FACEBOOK_test_ID']
+	APP_SECRET = ENV['FACEBOOK_test_SECRET']
 
 	def new
 		session[:referrer_id] = params[:referrer_id]
