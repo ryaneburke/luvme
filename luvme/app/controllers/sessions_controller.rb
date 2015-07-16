@@ -5,6 +5,7 @@ class SessionsController < ApplicationController
 
 	APP_ID = ENV['FACEBOOK_test_ID']
 	APP_SECRET = ENV['FACEBOOK_test_SECRET']
+	NGROK_ROOT = "http://a491c25e.ngrok.io"
 
 	def new
 		session[:referrer_id] = params[:referrer_id]
@@ -36,7 +37,7 @@ class SessionsController < ApplicationController
 
 	def oauth_url_generator
 		base_url ='https://www.facebook.com/dialog/oauth'
-  	redirect_uri = 'http://7bc3eef2.ngrok.io/create'
+  	redirect_uri = "#{NGROK_ROOT}/create"
   	state = SecureRandom.urlsafe_base64
   	session[:auth_state] = state
   	client_id = APP_ID
@@ -54,7 +55,7 @@ class SessionsController < ApplicationController
 			client_id: APP_ID,
 			client_secret: APP_SECRET,
 			code: code,
-			redirect_uri: 'http://7bc3eef2.ngrok.io/create'}
+			redirect_uri: "#{NGROK_ROOT}/create"}
 		headers = {
 			:Accept => :json}
 		RestClient.post(url, data, headers)

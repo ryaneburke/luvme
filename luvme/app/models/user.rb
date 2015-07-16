@@ -1,13 +1,13 @@
 class User < ActiveRecord::Base
-	
+
 	before_save :assign_referrer_id
 
 	def admin?
-		self.type == 'admin'
+		self.type == 'Admin'
 	end
 
 	def viewer?
-		self.type == 'viewer'
+		self.type == 'Viewer'
 	end
 
 	def assign_referrer_id

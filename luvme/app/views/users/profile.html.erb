@@ -1,9 +1,10 @@
-<div id="profile-card" class="mdl-card">
+<div id="profile-card" class="mdl-card mdl-shadow--4dp">
 	<div id="profile-div-title" class="mdl-card__title">
 		<h2 class="mdl-card__title-text">Profile</h2>
 	</div>
 	<div id="profile-div-form" class="mdl-card__supporting-text">
-		<form id="user-profile" action="#">
+		<form id="user-profile" action="/users/<%= @user.id %>" method="POST">
+			<input type="hidden" name="_method" value="PATCH">
 		  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
 		    <input class="mdl-textfield__input" type="text" name="fname" id="profile-fname" value="<%= @user.fname %>" />
 		    <label class="mdl-textfield__label" for="sample3">First name...</label>
@@ -18,16 +19,10 @@
 			 	<input class="mdl-textfield__input" type="text" name="gender" id="gender-location" value="<%= @user.gender %>" />
 			  <label class="mdl-textfield__label" for="sample3">Gender...</label>
 			</div>
-			<!-- ajax: post route, methodoverride, to update -->
-			<button><a href="/users/<%=@user.id%>">Update my changes</button>
+			<div id="profile-div-cta">
+			<a href="/users/<%=@user.id%>">
+				<button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Save</button></a>
+			</div>
 		</form>
 	</div>
-	<div class="mdl-card__actions">
-		<!-- ajax: get route -->
-		<a href="/users/<%=@user.id%>/photos">go to Photos</a>
-	</div>
 </div>
-
-<h2>debugging</h2>
-<p>FB RESPONSE: <%= @fb_response %></p>
-<p> USER OBJECT: <%= @user %></p>

@@ -16,6 +16,6 @@ Rails.application.routes.draw do
   patch '/users/:id/switch_types'=> 'users#switch_types' #viewer only, viewer to admin switch
 
   get 	'/users/:id/profile'	=> 'users#profile' #admin only, if an admin wants to update their profile later
-  patch	'/users/:id'					=> 'users#update' #admin only, updates user model, redirects to profile
+  patch	'/users/:id'					=> 'users#update' #type agnostic, updates user model, redirects to profile
 
 end

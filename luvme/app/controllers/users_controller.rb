@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-
+	skip_before_action :verify_authenticity_token
 
 	def new #profile
 	#API call to get relevant User data
@@ -8,7 +8,6 @@ class UsersController < ApplicationController
 		}
 		url = "https://graph.facebook.com/v2.4/me?fields=first_name,gender,location,albums"
 		@fb_response = JSON.parse( RestClient.get(url, headers) )
-		binding.pry
 		user = User.find_by({profile_album_id: parse_profile_album_id(@fb_response)})
 	#does the user already exist in the DB?
 		if user
@@ -20,7 +19,7 @@ class UsersController < ApplicationController
 			else
 			#if they didn't come here to look, they came here to make
 			#send them to profile so they can make their own version	
-				@user = user.to_String
+				@user = user
 				session[:user_id] = user.id
 				render :profile
 			end
@@ -61,17 +60,34 @@ class UsersController < ApplicationController
 			end	
 		end
 	end
+
+	def update
+		@user = User.find(params['id'])
+		@user.update({
+			fname: params['fname'],
+			location: params['location'],
+			gender: params['gender'] 
+		})
+		if @user.admin?
+			redirect_to "/users/#{@user.id}/photos"
+		else
+			redirect_to "/users/#{@user.id}/prefs"
+		end
+	end
 		
 	def photos
+
 	#repull current_user object out of DB
 		current_user
 	#API call to get profile photos
 		headers = {
 			:Authorization => "OAuth #{session[:access_token]}"
 		}
-		url = "#{@current_user.profile_album_id}/photos?fields=images&limit=10"
+		url = "#{@current_user.profile_album_id}?fields=photos.limit(10){images}"
+
+		binding.pry
 		@fb_response = JSON.parse( RestClient.get(url, headers) )
-		@photo_array = parse_profile_photos(@fb_response)
+		@photo_array = parse_profile_photos(@fb_response, 600)
 		create_and_save_photo_entries(@photo_array)
 		render :photos
 	end
@@ -114,18 +130,21 @@ class UsersController < ApplicationController
 			render :'/errors/switch'
 		end
 	end
-
-
-	end
 	
 	private
 
-	def parse_profile_photos(response, width)
+	def parse_profile_album_id(response)
+		albums = response['albums']['data']
+		profile_album = albums.select{|album| album['name'] == "Profile Pictures"}
+		profile_album[0]['id']
+	end
+
+	def parse_profile_photos(response)
 		photo_array = []
 		data = response[:data]
 		data.each do |single_pic|
 			single_pic[:images].each do |size|
-				if size[:width] == width
+				if size[:width] == "600"
 					photo_array.push(size[:source])
 				end
 			end
