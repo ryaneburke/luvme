@@ -20,8 +20,8 @@ class UsersController < ApplicationController
 			else
 			#if they didn't come here to look, they came here to make
 			#send them to profile so they can make their own version	
-				@user = user
-				session[:user_id] = @user.id
+				@user = user.to_String
+				session[:user_id] = user.id
 				render :profile
 			end
 		else

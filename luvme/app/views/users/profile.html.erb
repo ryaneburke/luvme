@@ -1,18 +1,33 @@
-<h1>profile</h1>
-
-<!-- link helper for user object -->
-<!-- temporary data render -->
-<p>Look good?</p>
-<p><%= @user.fname %></p>
-<p><%= @user.location %></p>
-<p><%= @user.gender %></p>
+<div id="profile-card" class="mdl-card">
+	<div id="profile-div-title" class="mdl-card__title">
+		<h2 class="mdl-card__title-text">Profile</h2>
+	</div>
+	<div id="profile-div-form" class="mdl-card__supporting-text">
+		<form id="user-profile" action="#">
+		  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
+		    <input class="mdl-textfield__input" type="text" name="fname" id="profile-fname" value="<%= @user.fname %>" />
+		    <label class="mdl-textfield__label" for="sample3">First name...</label>
+		  </div>
+		  <% if @user.location %>
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
+			  <input class="mdl-textfield__input" type="text" name="location" id="profile-location" value="<%= @user.location %>" />
+			  <label class="mdl-textfield__label" for="sample3">Location...</label>
+			</div>
+			<% end %>
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
+			 	<input class="mdl-textfield__input" type="text" name="gender" id="gender-location" value="<%= @user.gender %>" />
+			  <label class="mdl-textfield__label" for="sample3">Gender...</label>
+			</div>
+			<!-- ajax: post route, methodoverride, to update -->
+			<button><a href="/users/<%=@user.id%>">Update my changes</button>
+		</form>
+	</div>
+	<div class="mdl-card__actions">
+		<!-- ajax: get route -->
+		<a href="/users/<%=@user.id%>/photos">go to Photos</a>
+	</div>
+</div>
 
 <h2>debugging</h2>
 <p>FB RESPONSE: <%= @fb_response %></p>
 <p> USER OBJECT: <%= @user %></p>
-
-<!-- ajax: post route, methodoverride, to update -->
-<button><a href="/users/<%=@user.id%>">Update my changes</button>
-
-<!-- ajax: get route -->
-<button><a href="/users/<%=@user.id%>/photos">go to Photos</a></button>

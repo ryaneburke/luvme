@@ -1,0 +1,29 @@
+footer {
+	width: 100%;
+	bottom: 0;
+}
+
+#yield-wrapper {
+	min-height: 600px;
+	margin: auto;
+}
+
+#main-logo {
+	display: block;
+	margin-top: 100px;
+	margin-bottom: 0;
+	font-size: 100px;
+	text-align: center;
+}
+
+#main-tagline {
+	margin-top: 0;
+}
+
+#main-cta {
+	text-align: center;
+}
+
+#main-cta-wrapper {
+	text-align: center;
+}
