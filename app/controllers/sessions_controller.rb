@@ -3,9 +3,15 @@ class SessionsController < ApplicationController
 	# APP_ID = Rails.application.secrets.facebook_app_id
 	# APP_SECRET = Rails.application.secrets.facebook_app_secret
 
-	APP_ID = ENV['FACEBOOK_test_ID']
-	APP_SECRET = ENV['FACEBOOK_test_SECRET']
-	NGROK_ROOT = "http://a491c25e.ngrok.io"
+	if ENV['RACK_ENV'] == "production"
+		APP_ID = ENV['FACEBOOK_test_ID']
+		APP_SECRET = ENV['FACEBOOK_test_SECRET']
+		ROOT = "http://desolate-hamlet-2924.herokuapp.com/"
+	else
+		APP_ID = ENV['FACEBOOK_test_ID']
+		APP_SECRET = ENV['FACEBOOK_test_SECRET']
+		ROOT = "http://a491c25e.io"
+	end
 
 	def new
 		session[:referrer_id] = params[:referrer_id]
@@ -37,7 +43,7 @@ class SessionsController < ApplicationController
 
 	def oauth_url_generator
 		base_url ='https://www.facebook.com/dialog/oauth'
-  	redirect_uri = "#{NGROK_ROOT}/create"
+  	redirect_uri = "#{ROOT}/create"
   	state = SecureRandom.urlsafe_base64
   	session[:auth_state] = state
   	client_id = APP_ID
@@ -55,7 +61,7 @@ class SessionsController < ApplicationController
 			client_id: APP_ID,
 			client_secret: APP_SECRET,
 			code: code,
-			redirect_uri: "#{NGROK_ROOT}/create"}
+			redirect_uri: "#{ROOT}/create"}
 		headers = {
 			:Accept => :json}
 		RestClient.post(url, data, headers)
