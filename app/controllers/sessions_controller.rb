@@ -16,30 +16,28 @@ class SessionsController < ApplicationController
 	def new
 		session[:referrer_id] = params[:referrer_id]
   	@auth_url = oauth_url_generator
-  	@error = params[:error]
   	render :new
 	end
 
 	def create
 	#need:: check to see if request is coming from facebook API, if yes, proceed, if not, redirect away
-		begin
 
-			code = params[:code]
-	  	state = params[:state]
+		code = params[:code]
+  	state = params[:state]
 
-	  	if session[:auth_state] == state
+  	if session[:auth_state] == state
 
-	  		fb_response = get_access_token(code)
-	  		session[:access_token] = JSON.parse(fb_response)["access_token"]
-	  		redirect_to '/users/new'
-	  	else
-	  		redirect_to '/'
-	  #need:: do a rerequest to follow up on denied or modified scope permissions
-	  	end
-	  rescue => e
-	  	puts e
-	  end
-			redirect_to "/?error=#{e.to_s}"
+  		fb_response = get_access_token(code)
+  		if fb_response
+  			session[:access_token] = JSON.parse(fb_response)["access_token"]
+  			redirect_to '/users/new'
+  		else
+  			redirect_to '/'
+			end	  			
+  	else
+  		redirect_to '/'
+  #need:: do a rerequest to follow up on denied or modified scope permissions
+  	end
 	end
 
 	def destroy
@@ -71,7 +69,11 @@ class SessionsController < ApplicationController
 			redirect_uri: "#{ROOT}/create"}
 		headers = {
 			:Accept => :json}
-		RestClient.post(url, data, headers)
+		begin
+			RestClient.post(url, data, headers)
+		rescue => e
+			puts e
+		end
 	end
 
 
