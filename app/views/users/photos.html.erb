@@ -2,9 +2,3 @@
 
 <p><%= @fb_response %></p>
 
-<% if @user.viewer? %>
-	<a href="/users/<%= @user.id %>/prefs">go to Prefs</a>
-<% else %>
-	<a href="/users/<%= @user.id %>/photos">go to Photos</a>
-<% end %>
-
