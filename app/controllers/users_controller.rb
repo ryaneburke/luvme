@@ -72,7 +72,7 @@ class UsersController < ApplicationController
 		url = "https://graph.facebook.com/v2.4/#{@current_user.profile_album_id}?fields=photos.limit(10)%7Bimages%7D"
 
 		@fb_response = JSON.parse( RestClient.get(url, headers) )
-		@photo_array = parse_profile_photos(@fb_response, 600)
+		@photo_array = parse_profile_photos(@fb_response)
 		create_and_save_photo_entries(@photo_array)
 		render :photos
 	end
