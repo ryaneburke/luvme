@@ -1,23 +1,25 @@
 // how to make this contingent, only accessible on loading
 
-// $(document).ready(function(){
+var $heart = $('#loading-icon-heart')
 
-// 	if( $('#loading-icon-heart') ){ //------------this is returning true regardless 
-// 		var intervalID = setInterval(function(){
-// 			$('#loading-icon-heart').velocity(
-// 				{scale: "+=50%"}, [500,20]
-// 			);
-// 		}, 1000);
+$(document).ready(function(){
 
-// 		var intervalID2 = setInterval(function(){
-// 			$('#loading-icon-heart').velocity(
-// 				{scale: "-=50%"}, [500,20]
-// 			);
-// 		}, 1000);
+	if($heart != undefined || $heart != null ){ 
+		var intervalID = setInterval(function(){
+			$heart.velocity(
+				{scale: "+=50%"}, [500,20]
+			);
+		}, 1000);
+
+		var intervalID2 = setInterval(function(){
+			$heart.velocity(
+				{scale: "-=50%"}, [500,20]
+			);
+		}, 1000);
 	  
-// 	  var timeoutID = setTimeout(function(){
-// 	    window.location.href="http://desolate-hamlet-2924.herokuapp.com/browse";
-// 	  }, 5000);
-// 	};
+	  var timeoutID = setTimeout(function(){
+	    window.location.href="http://desolate-hamlet-2924.herokuapp.com/browse";
+	  }, 5000);
+	};
 
-// })
+})
