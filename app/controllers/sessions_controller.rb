@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
 	if ENV['RACK_ENV'] == "production"
 		APP_ID = ENV['FACEBOOK_test_ID']
 		APP_SECRET = ENV['FACEBOOK_test_SECRET']
-		ROOT = "http://desolate-hamlet-2924.herokuapp.com/"
+		ROOT = "http://desolate-hamlet-2924.herokuapp.com"
 	else
 		APP_ID = ENV['FACEBOOK_test_ID']
 		APP_SECRET = ENV['FACEBOOK_test_SECRET']
