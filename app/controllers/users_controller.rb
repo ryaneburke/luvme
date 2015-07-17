@@ -21,7 +21,7 @@ class UsersController < ApplicationController
 			#send them to photos so they can make their own version	
 				@user = user
 				session[:user_id] = user.id
-				redirect_to "/users/#{session[:user_id]}/photos"
+				redirect_to "/users/#{session[:user_id]}/convert"
 			end
 		else
 			#user doesn't exist and doesn't have a referrer_id
