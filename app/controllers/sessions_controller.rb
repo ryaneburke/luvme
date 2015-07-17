@@ -13,6 +13,8 @@ class SessionsController < ApplicationController
 		ROOT = "http://a491c25e.io"
 	end
 
+###################	
+
 	def new
 		session[:referrer_id] = params[:referrer_id]
   	@auth_url = oauth_url_generator
@@ -21,13 +23,9 @@ class SessionsController < ApplicationController
 
 	def create
 	#need:: check to see if request is coming from facebook API, if yes, proceed, if not, redirect away
+  	if session[:auth_state] == params[:state]
 
-		code = params[:code]
-  	state = params[:state]
-
-  	if session[:auth_state] == state
-
-  		fb_response = get_access_token(code)
+  		fb_response = get_access_token(params[:code])
   		if fb_response # this might be an erro
   			# how to check for what it is
   			session[:access_token] = JSON.parse(fb_response)["access_token"]
@@ -54,11 +52,10 @@ class SessionsController < ApplicationController
   	redirect_uri = "#{ROOT}/create"
   	state = SecureRandom.urlsafe_base64
   	session[:auth_state] = state
-  	client_id = APP_ID
   	display = "popup"
   	response_type = "code"
   	scope = "public_profile, user_photos"
-  	oauth_url = "#{base_url}?client_id=#{client_id}&display=#{display}&response_type=#{response_type}&redirect_uri=#{redirect_uri}&state=#{state}&scope=#{scope}"
+  	oauth_url = "#{base_url}?client_id=#{APP_ID}&display=#{display}&response_type=#{response_type}&redirect_uri=#{redirect_uri}&state=#{state}&scope=#{scope}"
 	end
 
 	def get_access_token(code)
