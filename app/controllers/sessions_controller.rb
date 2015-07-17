@@ -28,7 +28,8 @@ class SessionsController < ApplicationController
   	if session[:auth_state] == state
 
   		fb_response = get_access_token(code)
-  		if fb_response
+  		if fb_response # this might be an erro
+  			# how to check for what it is
   			session[:access_token] = JSON.parse(fb_response)["access_token"]
   			redirect_to '/users/new'
   		else
@@ -72,7 +73,7 @@ class SessionsController < ApplicationController
 		begin
 			RestClient.post(url, data, headers)
 		rescue => e
-			puts e
+			e
 		end
 	end
 
