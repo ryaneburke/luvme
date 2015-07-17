@@ -1,5 +1,8 @@
 <h1>photos</h1>
-<img src="<%=@photos.first%>">
+
+<p><%= @fb_response %></p>
+
+<!-- <img src="<%=@photos.first%>"> -->
 
 <% if @user.viewer? %>
 	<a href="/users/<%= @user.id %>/prefs">go to Prefs</a>
