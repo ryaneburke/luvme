@@ -14,4 +14,5 @@
 //= require jquery_ujs
 //= require_tree .
 //= require material.js
+//= require velocity.min.js
 //
