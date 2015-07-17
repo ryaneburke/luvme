@@ -8,7 +8,8 @@ class UsersController < ApplicationController
 		}
 		url = "https://graph.facebook.com/v2.4/me?fields=first_name,gender,location,albums"
 		@fb_response = JSON.parse( RestClient.get(url, headers) )
-		user = User.find_by({profile_album_id: parse_profile_album_id(@fb_response)})
+		profile_album_id = parse_profile_album_id(@fb_response)
+		user = User.find_by({profile_album_id: profile_album_id})
 	#does the user already exist in the DB?
 		if user
 			#did user come in with a referrer_id?
