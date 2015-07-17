@@ -23,21 +23,18 @@ class SessionsController < ApplicationController
 
 	def create
 	#need:: check to see if request is coming from facebook API, if yes, proceed, if not, redirect away
-  # 	if session[:auth_state] == params[:state]
-
-  		@info = get_access_token(params[:code])
-  # 		if fb_response # this might be an erro
-  # 			# how to check for what it is
-  # 			session[:access_token] = JSON.parse(fb_response)["access_token"]
-  # 			redirect_to '/users/new'
-  # 		else
-  # 			redirect_to '/'
-		# 	end	  			
-  # 	else
-  # 		redirect_to '/'
-  # #need:: do a rerequest to follow up on denied or modified scope permissions
-  # 	end
-  	render :inspect
+  	if session[:auth_state] == params[:state]
+  		fb_response = get_access_token(params[:code])
+  		if fb_response
+  			session[:access_token] = JSON.parse(fb_response)["access_token"]
+  			redirect_to '/users/new'
+  		else
+  			redirect_to '/'
+			end	  			
+  	else
+  		redirect_to '/'
+  		#need:: do a rerequest to follow up on denied or modified scope permissions
+  	end
 	end
 
 	def destroy

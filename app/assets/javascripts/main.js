@@ -2,7 +2,7 @@
 
 // $(document).ready(function(){
 
-// 	if( $('#loading-icon-heart') ){
+// 	if( $('#loading-icon-heart') ){ //------------this is returning true regardless 
 // 		var intervalID = setInterval(function(){
 // 			$('#loading-icon-heart').velocity(
 // 				{scale: "+=50%"}, [500,20]
@@ -21,4 +21,3 @@
 // 	};
 
 // })
-
