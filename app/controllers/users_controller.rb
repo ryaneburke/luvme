@@ -101,6 +101,7 @@ class UsersController < ApplicationController
 	end
 
 	def convert
+		current_user
 		render :convert
 	end
 
