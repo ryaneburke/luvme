@@ -32,12 +32,13 @@ class SessionsController < ApplicationController
 	  		session[:access_token] = JSON.parse(fb_response)["access_token"]
 	  		redirect_to '/users/new'
 	  	else
-	  		"we've been tampered with"
+	  		redirect_to '/'
 	  #need:: do a rerequest to follow up on denied or modified scope permissions
 	  	end
 	  rescue => e
 	  	puts e
 	  end
+			redirect_to '/'
 	end
 
 	def destroy
