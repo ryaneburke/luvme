@@ -50,8 +50,6 @@ class SessionsController < ApplicationController
   	client_id = APP_ID
   	display = "popup"
   	response_type = "code"
-  	redirect_uri = redirect_uri
-  	state = state
   	scope = "public_profile, user_photos"
   	oauth_url = "#{base_url}?client_id=#{client_id}&display=#{display}&response_type=#{response_type}&redirect_uri=#{redirect_uri}&state=#{state}&scope=#{scope}"
 	end
