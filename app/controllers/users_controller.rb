@@ -6,7 +6,7 @@ class UsersController < ApplicationController
 		headers = {
 			:Authorization => "OAuth #{session[:access_token]}"
 		}
-		url = "https://graph.facebook.com/v2.4/me?fields=first_name,gender,location,albums"
+		url = URI("https://graph.facebook.com/v2.4/me?fields=first_name,gender,location,albums")
 		@fb_response = JSON.parse( RestClient.get(url, headers) )
 		profile_album_id = parse_profile_album_id(@fb_response)
 		user = User.find_by({profile_album_id: profile_album_id})
