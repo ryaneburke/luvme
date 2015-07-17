@@ -16,6 +16,7 @@ class SessionsController < ApplicationController
 	def new
 		session[:referrer_id] = params[:referrer_id]
   	@auth_url = oauth_url_generator
+  	@error = params[:error]
   	render :new
 	end
 
@@ -38,7 +39,7 @@ class SessionsController < ApplicationController
 	  rescue => e
 	  	puts e
 	  end
-			redirect_to '/'
+			redirect_to "/?error=#{e.to_s}"
 	end
 
 	def destroy
