@@ -147,18 +147,18 @@ class UsersController < ApplicationController
 	end
 
 	def parse_profile_photos(response)
-		photo_array = []
-		just_links = []
+		img_obj_array = []
+		img_links = []
 		data = response['photos']['data']
-		data.map do |one_pic|
-			holding_var = one_pic['images'].select{|img| img['width'] == 600}
+		data.map do |img_obj|
+			holding_var = img_obj['images'].select{|img| img['width'] == 600}
 			photo_array.push(holding_var)
 		end
-		flattened_photo_array = photo_array.flatten
-		flattened_photo_array.map do |photo|
-			just_links.push(photo['source'])
+		flattened_img_array = img_obj_array.flatten
+		flattened_img_array.map do |img|
+			img_links.push(img['source'])
 		end
-		just_links
+		img_links
 	end
 
 	def create_and_save_photo_entries(array)
