@@ -69,8 +69,6 @@ class UsersController < ApplicationController
 			:Authorization => "OAuth #{session[:access_token]}"
 		}
 		url = "#{@current_user.profile_album_id}?fields=photos.limit(10){images}"
-
-		binding.pry
 		@fb_response = JSON.parse( RestClient.get(url, headers) )
 		@photo_array = parse_profile_photos(@fb_response, 600)
 		create_and_save_photo_entries(@photo_array)

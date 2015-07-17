@@ -25,6 +25,7 @@ class SessionsController < ApplicationController
   	state = params[:state]
   	if session[:auth_state] == state
   		fb_response = get_access_token(code)
+  		puts fb_response
   		session[:access_token] = JSON.parse(fb_response)["access_token"]
   		redirect_to '/users/new'
   	else
