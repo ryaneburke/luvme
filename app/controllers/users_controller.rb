@@ -73,11 +73,10 @@ class UsersController < ApplicationController
 
 		@fb_response = JSON.parse( RestClient.get(url, headers) )
 
-		render :photos
 		
 		
-		# @photo_array = parse_profile_photos(@fb_response)
 		# create_and_save_photo_entries(@photo_array)
+		render :photos
 	end
 
 	def prefs
@@ -149,15 +148,17 @@ class UsersController < ApplicationController
 
 	def parse_profile_photos(response)
 		photo_array = []
-		data = response[:data]
-		data.each do |single_pic|
-			single_pic[:images].each do |size|
-				if size[:width] == "600"
-					photo_array.push(size[:source])
-				end
-			end
+		just_links = []
+		data = response['photos']['data']
+		data.map do |one_pic|
+			holding_var = one_pic['images'].select{|img| img['width'] == 600}
+			photo_array.push(holding_var)
 		end
-		photo_array
+		flattened_photo_array = photo_array.flatten
+		flattened_photo_array.map do |photo|
+			just_links.push(photo['source'])
+		end
+		just_links
 	end
 
 	def create_and_save_photo_entries(array)
