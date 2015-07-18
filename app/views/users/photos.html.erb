@@ -1,4 +1,13 @@
-<h1>photos</h1>
-
-<p><%= @fb_response %></p>
-
+<div class="mdl-grid">
+	<div id="prefs-div-title" class="mdl-cell mdl-cell-12-col">
+		<h2 class="mdl-card__title-text">Photos</h2>
+	</div>
+	<% @array_img_links.each do |img| %>
+		<div class="mdl-cell mdl-cell--4-col mdl-cell-5-col-tablet">
+			<img class="photos-singles" src="<%= img %>">
+		</div>
+	<% end %>
+	<div id="prefs-div-cta-button" class="mdl-cell mdl-cell-1-col">
+		<a href="users/<%= current_user.referrer_id %>/share"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect">Share</button></a>
+	</div>
+</div>

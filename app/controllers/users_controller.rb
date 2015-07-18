@@ -61,7 +61,8 @@ class UsersController < ApplicationController
 			end	
 		end
 	end
-		
+#########################
+#########################			
 	def photos
 	#repull current_user object out of DB
 		current_user
@@ -72,42 +73,47 @@ class UsersController < ApplicationController
 		url = "https://graph.facebook.com/v2.4/#{@current_user.profile_album_id}?fields=photos.limit(10)%7Bimages%7D"
 
 		@fb_response = JSON.parse( RestClient.get(url, headers) )
-
-		
-		
-		# create_and_save_photo_entries(@photo_array)
+		@array_img_links = parse_profile_photos(@fb_response)
+		create_and_save_photo_entries(@array_img_links)
 		render :photos
 	end
-
+#########################
+#########################	
 	def prefs
 		current_user
 		render :prefs
 	end
-
+#########################
+#########################	
 	def loading
 		current_user
 		@referrer_id = session[:referrer_id]
 		render :loading
 	end
-
+#########################
+#########################	
 	def share
 		current_user
 		session[:referrer_id] = current_user.referrer_id
 		render :share
 	end
-
+#########################
+#########################	
 	def browse
+		current_user
 		if session[:referrer_id]
 			@admin = Admin.find({referrer_id: session[:referrer_id]})
 			@photos = @admin.photos.pluck(:img_url)
 		end
 	end
-
+#########################
+#########################	
 	def convert
 		current_user
 		render :convert
 	end
-
+#########################
+#########################	
 	def switch_types
 		current_user
 		@current_user.type = 'admin'
@@ -118,12 +124,14 @@ class UsersController < ApplicationController
 			render :'/errors/switch'
 		end
 	end
-
+#########################
+#########################	
 	def profile
 		current_user
 		render :profile
 	end
-
+#########################
+#########################	
 	def update
 		@user = User.find(params['id'])
 		@user.update({
@@ -137,7 +145,9 @@ class UsersController < ApplicationController
 			redirect_to "/users/#{@user.id}/prefs"
 		end
 	end
-	
+
+#########################
+#########################	
 	private
 
 	def parse_profile_album_id(response)
@@ -151,11 +161,9 @@ class UsersController < ApplicationController
 		img_links = []
 		data = response['photos']['data']
 		data.map do |img_obj|
-			holding_var = img_obj['images'].select{|img| img['width'] == 600}
-			photo_array.push(holding_var)
+			img_obj_array.push( img_obj['images'].first )
 		end
-		flattened_img_array = img_obj_array.flatten
-		flattened_img_array.map do |img|
+		img_obj_array.map do |img|
 			img_links.push(img['source'])
 		end
 		img_links
