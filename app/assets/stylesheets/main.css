@@ -115,6 +115,15 @@ footer {
 .prefs-slider-span-right {
 	float: right;
 }
+/* ----- users#photos ----- */
+.div-photos-singles {
+	height: 256px;
+	width: 256px;
+}
+.photos-singles {
+	height: 256px;
+	width: 256px;
+}
 
 
 

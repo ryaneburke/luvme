@@ -4,7 +4,10 @@
 	</div>
 	<% @array_img_links.each do |img| %>
 		<div class="mdl-cell mdl-cell--4-col mdl-cell-5-col-tablet">
-			<img class="photos-singles" src="<%= img %>">
+			<div class="mdl-card mdl-shadow--2dp div-photos-singles">
+  			<div class="mdl-card__title mdl-card--expand"></div>
+				<img class="photos-singles" src="<%= img %>">	
+			</div>
 		</div>
 	<% end %>
 	<div id="prefs-div-cta-button" class="mdl-cell mdl-cell-1-col">
