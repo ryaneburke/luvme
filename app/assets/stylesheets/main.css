@@ -124,7 +124,20 @@ footer {
 	height: 256px;
 	width: 256px;
 }
+/* ----- users#profile ----- */
+#share-card {
+	margin-top: 40px;
+	min-height: 450px;
+}
 
+#share-div-title {
+	height: 200px;
+	background-color: #df3e7d;
+	color: white;
+}
 
+.share-div-cta {
+	text-align: center;
+}
 
 
