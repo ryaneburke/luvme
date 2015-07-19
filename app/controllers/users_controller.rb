@@ -102,7 +102,7 @@ class UsersController < ApplicationController
 	def browse
 		current_user
 		if session[:referrer_id]
-			@admin = Admin.find({referrer_id: session[:referrer_id]})
+			@admin = Admin.find_by({referrer_id: session[:referrer_id]})
 			@photos = @admin.photos.pluck(:img_url)
 		end
 	end
