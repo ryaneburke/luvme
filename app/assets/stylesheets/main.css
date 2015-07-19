@@ -117,14 +117,14 @@ footer {
 }
 /* ----- users#photos ----- */
 .div-photos-singles {
-	height: 256px;
-	width: 256px;
+	margin: 0 auto;
 }
 .photos-singles {
-	height: 256px;
-	width: 256px;
+	height: 200px;
+	width: 200px;
+	margin: 0 auto 30px;
 }
-/* ----- users#profile ----- */
+/* ----- users#share ----- */
 #share-card {
 	margin-top: 40px;
 	min-height: 450px;
@@ -139,5 +139,39 @@ footer {
 .share-div-cta {
 	text-align: center;
 }
+/* ----- users#browse ----- */
+#loading-div-loaders {
+	width: 100%;
+	margin-top: 20%;
+	text-align: center;
+}
 
+.loading-loaders {
+	margin: 0 auto;
+}
+
+#loading-cuties {
+	width: 100%;
+	text-align: center;
+}
+#loading-cuties h1 {
+	font-family: "Poiret One";
+	font-size: 3em;
+}
+
+#loading-icon-heart {
+	font-size: 100px;
+	margin-bottom: 40px;
+}
+
+#progress-bar-loader {
+	width: 80%;
+}
+
+
+
+/* ----- users#browse ----- */
+#image-bank {
+	display: none;
+}
 

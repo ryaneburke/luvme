@@ -173,7 +173,7 @@ class UsersController < ApplicationController
 		array.each do |photo|
 			new_photo = Photo.new({
 				img_url: photo,
-				user_id: session[:user_id]
+				admin_id: session[:user_id]
 			})
 			new_photo.save
 		end

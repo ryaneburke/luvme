@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
 	else
 		APP_ID = ENV['FACEBOOK_test_ID']
 		APP_SECRET = ENV['FACEBOOK_test_SECRET']
-		ROOT = "http://a491c25e.io"
+		ROOT = "http://0b0a1ee4.ngrok.io"
 	end
 
 ###################	

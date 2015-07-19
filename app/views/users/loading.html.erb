@@ -1,9 +1,9 @@
 <div class="mdl-grid">
-	<div class="mdl-cell mdl-cell-12-col">
-		<i id="loading-icon-heart" class="material-icons md-48 pink-button">favorite</i>
-		<div id="p2" class="mdl-progress mdl-js-progress mdl-progress__indeterminate progress-demo"></div>
+	<div id="loading-div-loaders" class="mdl-cell mdl-cell-12-col">
+		<i id="loading-icon-heart" class="material-icons md-48 pink-button loading-loaders">favorite</i>
+		<div id="progress-bar-loader" class="mdl-progress mdl-js-progress mdl-progress__indeterminate progress-demo loading-loaders"></div>
 	</div>
-	<div class="mdl-cell mdl-cell-12-col">
+	<div id="loading-cuties" class="mdl-cell mdl-cell-12-col">
 		<h1>Finding Cuties Close By</h1>
 	</div>
 </div>
@@ -28,7 +28,7 @@ $(document).ready(function(){
 		}, 1000);
 	  
 	  var timeoutID = setTimeout(function(){
-	    window.location.href="http://desolate-hamlet-2924.herokuapp.com/browse";
+	    window.location.href="http://0b0a1ee4.ngrok.io/browse";
 	  }, 5000);
 	};
 

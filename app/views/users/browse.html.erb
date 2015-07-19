@@ -1,5 +1,68 @@
-<h1>browse</h1>
+<div class="mdl-grid">
 
-<% @photos.each do |photo| %>
-	<img src="<%= photo %>">
-<% end %>
+	<div id="prefs-div-title" class="mdl-cell mdl-cell-12-col">
+		<h2 class="mdl-card__title-text">Matches</h2>
+	</div>
+
+	<div class="mdl-cell mdl-cell--10-col mdl-cell-7-col-tablet">
+
+		<div id="browse-card" class="mdl-card mdl-shadow--4dp">
+			
+			<div id="browse-div-title" class="mdl-card__title">
+				<h2 class="mdl-card__title-text">Ryan</h2>
+			</div>
+
+			<div id="browse-div-hero" class="mdl-card__supporting-text">
+			</div>
+
+			<div id="browse-div-cta">
+				<span id="dislike-span">
+					<button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect browse-action-button">
+						<i class="material-icons md-48">close</i>
+					</button>
+				</span>
+				<span id="like-span">
+					<button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect browse-action-button">
+						<i class="material-icons md-48">favorite border</i>
+					</button>
+				</span>
+			</div>
+
+		</div>
+
+		<div id="browse-div-convert" class="mdl-cell mdl-cell-1-col">
+			<a href="users/<%= @current_user.id %>/convert">
+				<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect">
+					Ok, I get it. What's the deal?
+				</button>
+			</a>
+		</div>
+
+	</div>
+</div>
+
+<div id="image-bank">
+	<%= @photos %>
+</div>
+
+<script type="text/javascript">
+	var imagebank = $('#image-bank').text();
+	var counter = 0;
+	var heroDiv = $('#browse-div-hero');
+	var template = "<img id='browse-hero-img' src=" + imagebank[counter] + ">";
+	var renderHero = function(){
+		heroDiv.html(template)
+	// };
+	// renderHero();
+	// $('.browse-action-button').click(function(){
+	// 	counter++;
+	// 	renderHero();
+	// });
+	// if(counter == $imagebank.length){
+	// 	counter = 0;
+	// 	$('#browse-div-convert').css({"display: block"});
+	// 	renderHero();
+	// };
+</script>
+
+
