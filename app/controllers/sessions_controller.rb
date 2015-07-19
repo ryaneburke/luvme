@@ -4,8 +4,8 @@ class SessionsController < ApplicationController
 	# APP_SECRET = Rails.application.secrets.facebook_app_secret
 
 	if ENV['RACK_ENV'] == "production"
-		APP_ID = ENV['FACEBOOK_test_ID']
-		APP_SECRET = ENV['FACEBOOK_test_SECRET']
+		APP_ID = ENV['FACEBOOK_APP_ID']
+		APP_SECRET = ENV['FACEBOOK_APP_SECRET']
 		ROOT = "http://desolate-hamlet-2924.herokuapp.com"
 	else
 		APP_ID = ENV['FACEBOOK_test_ID']
