@@ -46,23 +46,36 @@
 </div>
 
 <script type="text/javascript">
-	var imagebank = $('#image-bank').text();
-	var counter = 0;
+
+	var counter;
 	var heroDiv = $('#browse-div-hero');
-	var template = "<img id='browse-hero-img' src=" + imagebank[counter] + ">";
+	var images = [];
+	var template = "<img id='browse-hero-img' src='" + images[counter] + "'>";
+
 	var renderHero = function(){
-		heroDiv.html(template)
-	// };
-	// renderHero();
-	// $('.browse-action-button').click(function(){
-	// 	counter++;
-	// 	renderHero();
-	// });
-	// if(counter == $imagebank.length){
-	// 	counter = 0;
-	// 	$('#browse-div-convert').css({"display: block"});
-	// 	renderHero();
-	// };
+		heroDiv.html(template);
+	};
+
+	$.ajax({
+		url: "http://desolate-hamlet-2924.herokuapp.com/browse.json",
+		type: "GET"
+	}).done(function(images){
+		console.log(images)
+		counter = 0;
+		renderHero();
+	});
+
+	$('.browse-action-button').click(function(){
+		counter++;
+		renderHero();
+	});
+	
+	if(counter === images.length){
+		counter = 0;
+		$('#browse-div-convert').css("display", "block");
+		renderHero();
+	};
+
 </script>
 
 

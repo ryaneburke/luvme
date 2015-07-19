@@ -103,8 +103,16 @@ class UsersController < ApplicationController
 		current_user
 		if session[:referrer_id]
 			@admin = Admin.find_by({referrer_id: session[:referrer_id]})
-			@photos = @admin.photos.pluck(:img_url)
+			render :browse
 		end
+	end
+
+	def get_images
+		current_user
+		admin = Admin.find_by({referrer_id: session[:referrer_id]})
+		photos = admin.photos.pluck(:img_url)
+		content_type :json
+		photos.to_json
 	end
 #########################
 #########################	
