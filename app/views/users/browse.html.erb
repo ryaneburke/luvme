@@ -59,7 +59,7 @@
 	imageBank.pop();
 	var name = $('#browse-name').text();
 	var template = "<img id='browse-hero-img' src='" + imageBank[counter] + "'>";
-	var game = [name, name + " again", "still " + name, "Sup girl","<pours Courvoisier>", "I bet your mom is gorgeous", "How about we play a game", "It's called sex", "Yeah, a ZJ. It's when you...", "xoxo, " + name]
+	var game = [name, name, name, name + " again", "Sup girl","<pours Courvoisier>", "You're gorgeous", "Let's play a game; everyone likes games", "It's called sex"]
 
 
 	var renderGame = function(name, array, counter){
@@ -81,14 +81,17 @@
 		renderHero(imageBank, counter);
 		renderGame(name, game, counter);
 	});
+
+	$(document).bind("DOMSubtreeModified", function(){
+		$(document).change(function(){
+			if(counter == imageBank.length){
+				counter = 0;
+				$('#browse-div-convert').css("display", "block");
+				renderHero(imageBank, counter);
+			};
+		});
+	});
 	
-	$(document).change(function(){
-		if(counter == imageBank.length){
-			counter = 0;
-			$('#browse-div-convert').css("display", "block");
-			renderHero(imageBank, counter);
-		};
-	})
 
 	// $.ajax({
 	// 	url: "http://0b0a1ee4.ngrok.io/browse.json",

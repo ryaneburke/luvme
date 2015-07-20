@@ -66,10 +66,10 @@ class UsersController < ApplicationController
 	def photos
 	#repull current_user object out of DB
 		current_user
-		if current_user.photos != nil
-			@array_img_links = current_user.photos.pluck(:img_url)
-			render :photos
-		else
+		# if current_user.photos != nil
+		# 	@array_img_links = current_user.photos.pluck(:img_url)
+		# 	render :photos
+		# else
 	#API call to get profile photos
 			headers = {
 				:Authorization => "OAuth #{session[:access_token]}"
