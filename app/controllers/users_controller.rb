@@ -83,7 +83,7 @@ class UsersController < ApplicationController
 			render :photos
 		# end
 	end
-#########################
+##########################
 #########################	
 	def prefs
 		current_user
