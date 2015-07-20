@@ -13,6 +13,6 @@ googleIMGs = ["https://lh3.googleusercontent.com/VjX6RfLuCcHQAlCULNHrN2AKAo2RxcD
 googleIMGs.each do |img|
 	Photo.create({
 		img_url: img,
-		admin_id: 1
+		admin_id: 2
 	})
 end
