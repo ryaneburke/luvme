@@ -82,11 +82,13 @@
 		renderGame(name, game, counter);
 	});
 	
-	if(counter == imageBank.length){
-		counter = 0;
-		$('#browse-div-convert').css("display", "block");
-		renderHero(imageBank, counter);
-	};
+	$(document).change(function(){
+		if(counter == imageBank.length){
+			counter = 0;
+			$('#browse-div-convert').css("display", "block");
+			renderHero(imageBank, counter);
+		};
+	})
 
 	// $.ajax({
 	// 	url: "http://0b0a1ee4.ngrok.io/browse.json",
