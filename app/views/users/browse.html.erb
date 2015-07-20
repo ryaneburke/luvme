@@ -84,7 +84,7 @@
 
 	$(document).bind("DOMSubtreeModified", function(){
 		$(document).change(function(){
-			if(counter == imageBank.length){
+			if(counter >= 10){
 				counter = 0;
 				$('#browse-div-convert').css("display", "block");
 				renderHero(imageBank, counter);
