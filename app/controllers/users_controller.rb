@@ -80,7 +80,7 @@ class UsersController < ApplicationController
 			@array_img_links = parse_profile_photos(@fb_response)
 			create_and_save_photo_entries(@array_img_links)
 			render :photos
-		end
+		# end
 	end
 #########################
 #########################	
