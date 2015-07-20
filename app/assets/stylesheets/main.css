@@ -135,10 +135,20 @@ footer {
 	background-color: #df3e7d;
 	color: white;
 }
-
 .share-div-cta {
 	text-align: center;
+	margin-top: -30px;
+	margin-bottom: 10px;
 }
+.share-cta {
+	margin-bottom: 5px;
+}
+#share-now-copy {
+	font-family: "Poiret One";
+	font-size: 20px;
+}
+
+
 /* ----- users#browse ----- */
 #loading-div-loaders {
 	width: 100%;
