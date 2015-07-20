@@ -4,7 +4,6 @@ Rails.application.routes.draw do
   get   '/create'   => 'sessions#create' #oauth_callback
   get   '/logout'   => 'sessions#destroy'
 
-
   get		'/users/new'					=> 'users#new' #type agnostic, renders :profile
   get 	'/users/:id/photos' 	=> 'users#photos' #admin only
   get 	'/users/:id/prefs'		=> 'users#prefs' #type agnostic
@@ -18,5 +17,6 @@ Rails.application.routes.draw do
 
   get 	'/users/:id/profile'	=> 'users#profile' #admin only, if an admin wants to update their profile later
   patch	'/users/:id'					=> 'users#update' #type agnostic, updates user model, redirects to profile
+  get   '/:referrer_id'        => 'users#referral'
 
 end

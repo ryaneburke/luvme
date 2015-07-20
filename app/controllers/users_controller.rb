@@ -22,7 +22,7 @@ class UsersController < ApplicationController
 			#send them to photos so they can make their own version	
 				@user = user
 				session[:user_id] = user.id
-				redirect_to "/users/#{session[:user_id]}/convert"
+				redirect_to "/users/#{session[:user_id]}/photos"
 			end
 		else
 			#user doesn't exist and doesn't have a referrer_id
@@ -66,16 +66,21 @@ class UsersController < ApplicationController
 	def photos
 	#repull current_user object out of DB
 		current_user
+		if current_user.photos != nil
+			@array_img_links = current_user.photos.pluck(:img_url)
+			render :photos
+		else
 	#API call to get profile photos
-		headers = {
-			:Authorization => "OAuth #{session[:access_token]}"
-		}
-		url = "https://graph.facebook.com/v2.4/#{@current_user.profile_album_id}?fields=photos.limit(10)%7Bimages%7D"
+			headers = {
+				:Authorization => "OAuth #{session[:access_token]}"
+			}
+			url = "https://graph.facebook.com/v2.4/#{@current_user.profile_album_id}?fields=photos.limit(10)%7Bimages%7D"
 
-		@fb_response = JSON.parse( RestClient.get(url, headers) )
-		@array_img_links = parse_profile_photos(@fb_response)
-		create_and_save_photo_entries(@array_img_links)
-		render :photos
+			@fb_response = JSON.parse( RestClient.get(url, headers) )
+			@array_img_links = parse_profile_photos(@fb_response)
+			create_and_save_photo_entries(@array_img_links)
+			render :photos
+		end
 	end
 #########################
 #########################	
@@ -103,16 +108,21 @@ class UsersController < ApplicationController
 		current_user
 		if session[:referrer_id]
 			@admin = Admin.find_by({referrer_id: session[:referrer_id]})
+			@photos = @admin.photos.pluck(:img_url)
 			render :browse
+		else
+			redirect_to '/'
 		end
 	end
 
 	def get_images
 		current_user
 		admin = Admin.find_by({referrer_id: session[:referrer_id]})
-		photos = admin.photos.pluck(:img_url)
-		content_type :json
-		photos.to_json
+		@photos = admin.photos.pluck(:img_url)
+		respond_to do |format|
+			format.html
+			format.json { render json: @photos }
+		end
 	end
 #########################
 #########################	
@@ -131,6 +141,12 @@ class UsersController < ApplicationController
 		else
 			render :'/errors/switch'
 		end
+	end
+#########################
+#########################	
+	def referral
+		session[:referrer_id] = params[:referrer_id]
+		redirect_to "/"
 	end
 #########################
 #########################	
@@ -153,7 +169,12 @@ class UsersController < ApplicationController
 			redirect_to "/users/#{@user.id}/prefs"
 		end
 	end
-
+#########################
+#########################	
+	def logout
+		session[:user_id] = nil
+		redirect_to '/'
+	end
 #########################
 #########################	
 	private

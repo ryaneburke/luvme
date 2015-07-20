@@ -4,12 +4,12 @@
 		<h2 class="mdl-card__title-text">Matches</h2>
 	</div>
 
-	<div class="mdl-cell mdl-cell--10-col mdl-cell-7-col-tablet">
+	<div id="card-holder"class="mdl-cell mdl-cell--10-col mdl-cell-7-col-tablet">
 
 		<div id="browse-card" class="mdl-card mdl-shadow--4dp">
 			
 			<div id="browse-div-title" class="mdl-card__title">
-				<h2 class="mdl-card__title-text">Ryan</h2>
+				<h2 id="browse-name" class="mdl-card__title-text"><%= @current_user.fname %></h2>
 			</div>
 
 			<div id="browse-div-hero" class="mdl-card__supporting-text">
@@ -33,7 +33,7 @@
 		<div id="browse-div-convert" class="mdl-cell mdl-cell-1-col">
 			<a href="users/<%= @current_user.id %>/convert">
 				<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect">
-					Ok, I get it. What's the deal?
+					Okay, okay. What's the deal?
 				</button>
 			</a>
 		</div>
@@ -42,39 +42,61 @@
 </div>
 
 <div id="image-bank">
-	<%= @photos %>
+		<% @photos.each do |photo| %>
+			<%= photo %>...
+		<% end %>
 </div>
 
 <script type="text/javascript">
 
-	var counter;
+	var counter = 0;
 	var heroDiv = $('#browse-div-hero');
-	var images = [];
-	var template = "<img id='browse-hero-img' src='" + images[counter] + "'>";
+	var imageBankRaw = $("#image-bank").html().split("...");
+	var imageBank = []
+	imageBankRaw.map(function(img){
+		imageBank.push(img.trim());
+	})
+	imageBank.pop();
+	var name = $('#browse-name').text();
+	var template = "<img id='browse-hero-img' src='" + imageBank[counter] + "'>";
+	var game = [name, name + " again", "still " + name, "Sup girl","<pours Courvoisier>", "I bet your mom is gorgeous", "How about we play a game", "It's called sex", "Yeah, a ZJ. It's when you...", "xoxo, " + name]
 
-	var renderHero = function(){
+
+	var renderGame = function(name, array, counter){
+		$('#browse-name').text(game[counter])
+	}
+
+	var renderHero = function(array, counter){
+		heroDiv.html("");
+		template = "<img id='browse-hero-img' src='" + array[counter] + "'>"
 		heroDiv.html(template);
 	};
 
-	$.ajax({
-		url: "http://desolate-hamlet-2924.herokuapp.com/browse.json",
-		type: "GET"
-	}).done(function(images){
-		console.log(images)
-		counter = 0;
-		renderHero();
-	});
+	renderHero(imageBank, counter)
 
 	$('.browse-action-button').click(function(){
+		console.log("clicked")
 		counter++;
-		renderHero();
+		console.log(counter);
+		renderHero(imageBank, counter);
+		renderGame(name, game, counter);
 	});
 	
-	if(counter === images.length){
+	if(counter == imageBank.length){
 		counter = 0;
 		$('#browse-div-convert').css("display", "block");
-		renderHero();
+		renderHero(imageBank, counter);
 	};
+
+	// $.ajax({
+	// 	url: "http://0b0a1ee4.ngrok.io/browse.json",
+	// 	type: "GET",
+	// 	dataType: "json"
+	// }).done(function(images){
+	// 	console.log(images)
+	// 	counter = 0;
+	// 	renderHero();
+	// });
 
 </script>
 

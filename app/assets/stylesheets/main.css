@@ -93,7 +93,7 @@ footer {
 #profile-div-cta {
 	text-align: center;
 }
-/* ----- users#profile ----- */
+/* ----- users#prefs ----- */
 #prefs-div-title {
 	width: 100%;
 	background-color: #df3e7d;
@@ -167,11 +167,52 @@ footer {
 #progress-bar-loader {
 	width: 80%;
 }
-
-
-
 /* ----- users#browse ----- */
 #image-bank {
 	display: none;
+}
+#browse-card {
+	width: 450px;
+	margin: auto;
+}
+#browse-hero-img {
+	width: 400px;
+}
+#browse-div-cta {
+	text-align: center;
+	margin-bottom: 10px;
+}
+#browse-div-cta i {
+	width: 30px;
+	font-size: 30px;
+}
+#browse-div-convert {
+	width: 100%;
+	display: none;
+	text-align: center;
+	margin-top: 20px;
+}
+#browse-div-hero {
+	margin: auto;
+}
+#card-holder {
+	margin: auto;
+}
+@media (max-width: 530px) {
+	#browse-card {
+		width: 300px;
+		margin: auto;
+	}
+	#browse-hero-img {
+		width: 250px;
+	}
+}
+/* ----- users#convert ----- */
+.conversion-brief {
+	font-family: "Poiret One";
+	text-align: center;
+	font-size: 30px;
+	margin: 20px 0 0 10px;
+	line-height: 1.5em;
 }
 
