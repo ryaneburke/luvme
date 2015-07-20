@@ -56,7 +56,7 @@
 		imageBank.push(img.trim());
 	})
 	imageBank.pop();
-	var counter = imageBank.length;
+	var counter = 0;
 	var counterCopy = 0;
 	var name = $('#browse-name').text();
 	var template = "<img id='browse-hero-img' src='" + imageBank[counter] + "'>";
@@ -77,7 +77,7 @@
 
 	$('.browse-action-button').click(function(){
 		console.log("clicked")
-		counter--;
+		counter++;
 		counterCopy++;
 		console.log(counter);
 		renderHero(imageBank, counter);
@@ -85,7 +85,7 @@
 	});
 
 	$(document).change(function(){
-		if(counter <= (imageBank.length - 10)){
+		if(counter >= 9){
 			counterCopy = 0;
 			$('#browse-div-convert').css("display", "block");
 			renderGame(name, game, counterCopy);
