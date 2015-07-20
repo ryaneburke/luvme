@@ -49,7 +49,6 @@
 
 <script type="text/javascript">
 
-	var counter = 0;
 	var heroDiv = $('#browse-div-hero');
 	var imageBankRaw = $("#image-bank").html().split("...");
 	var imageBank = []
@@ -57,6 +56,8 @@
 		imageBank.push(img.trim());
 	})
 	imageBank.pop();
+	var counter = imageBank.length;
+	var counterCopy = 0;
 	var name = $('#browse-name').text();
 	var template = "<img id='browse-hero-img' src='" + imageBank[counter] + "'>";
 	var game = [name, name, name, name + " again", "Sup girl","<pours Courvoisier>", "You're gorgeous", "Let's play a game; everyone likes games", "It's called sex"]
@@ -76,20 +77,20 @@
 
 	$('.browse-action-button').click(function(){
 		console.log("clicked")
-		counter++;
+		counter--;
+		counterCopy++;
 		console.log(counter);
 		renderHero(imageBank, counter);
-		renderGame(name, game, counter);
+		renderGame(name, game, counterCopy);
 	});
 
-	$(document).bind("DOMSubtreeModified", function(){
-		$(document).change(function(){
-			if(counter >= 10){
-				counter = 0;
-				$('#browse-div-convert').css("display", "block");
-				renderHero(imageBank, counter);
-			};
-		});
+	$(document).change(function(){
+		if(counter <= (imageBank.length - 10)){
+			counterCopy = 0;
+			$('#browse-div-convert').css("display", "block");
+			renderGame(name, game, counterCopy);
+			renderHero(imageBank, counter);
+		};
 	});
 	
 
