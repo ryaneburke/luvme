@@ -3,16 +3,6 @@ class SessionsController < ApplicationController
 	# APP_ID = Rails.application.secrets.facebook_app_id
 	# APP_SECRET = Rails.application.secrets.facebook_app_secret
 
-	if ENV['RACK_ENV'] == "production"
-		APP_ID = ENV['FACEBOOK_APP_ID']
-		APP_SECRET = ENV['FACEBOOK_APP_SECRET']
-		ROOT = "http://desolate-hamlet-2924.herokuapp.com"
-	else
-		APP_ID = ENV['FACEBOOK_test_ID']
-		APP_SECRET = ENV['FACEBOOK_test_SECRET']
-		ROOT = "http://bcc10ed3.ngrok.io"
-	end
-
 ###################	
 
 	def new
@@ -35,6 +25,10 @@ class SessionsController < ApplicationController
   		redirect_to '/'
   		#need:: do a rerequest to follow up on denied or modified scope permissions
   	end
+	end
+
+	def bypass
+
 	end
 
 	def destroy

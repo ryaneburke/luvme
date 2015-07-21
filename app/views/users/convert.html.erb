@@ -6,6 +6,12 @@
 			<p class="conversion-brief">EEEEEEEESH. Stings doesn't it?<br><br>I promise it will feel better after you roast someone else. <br>Get goin' chef, the coals are hot.</p>
 		</div>
 	<div id="prefs-div-cta-button" class="mdl-cell mdl-cell-1-col">
-		<a href="/users/<%= @current_user.id %>/photos"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect">Click here to get started</button></a>
+	<% if @demo == true %>
+		<a href="/">
+	<% else %>
+		<a href="/users/<%= @current_user.id %>/photos">
+	<% end %>
+			<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect">Click here to get started</button>
+		</a>
 	</div>
 </div>

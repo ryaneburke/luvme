@@ -69,6 +69,10 @@
 		</label>
 	</div>
 	<div id="prefs-div-cta-button" class="mdl-cell mdl-cell-1-col">
-		<a href="/users/loading"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect">Luv Match!</button></a>
+		<% if @demo == true %>
+			<a href="/demo/loading"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect">Luv Match!</button></a>
+		<% else %>
+			<a href="/users/loading"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect">Luv Match!</button></a>
+		<% end %>
 	</div>
 </div>

@@ -4,7 +4,7 @@
 		<div id="progress-bar-loader" class="mdl-progress mdl-js-progress mdl-progress__indeterminate progress-demo loading-loaders"></div>
 	</div>
 	<div id="loading-cuties" class="mdl-cell mdl-cell-12-col">
-		<h1>Finding Cuties Close By</h1>
+		<h1>Curating Cuties Close By</h1>
 	</div>
 </div>
 
@@ -26,10 +26,11 @@ $(document).ready(function(){
 				{scale: "-=50%"}, [500,20]
 			);
 		}, 1000);
-	  
+
 	  var timeoutID = setTimeout(function(){
-	    window.location.href="http://0b0a1ee4.ngrok.io/browse";
+	    window.location.href="<%= @redirect_url %>";
 	  }, 5000);
+
 	};
 
 })

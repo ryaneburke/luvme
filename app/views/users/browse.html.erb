@@ -31,11 +31,16 @@
 		</div>
 
 		<div id="browse-div-convert" class="mdl-cell mdl-cell-1-col">
-			<a href="users/<%= @current_user.id %>/convert">
+			<% if @demo != true %>
+			<a href="/users/<%= @current_user.id %>/convert">
+			<% else %>
+			<a href="/demo/convert">
+			<% end %>
 				<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect">
 					Okay, okay. What's the deal?
 				</button>
 			</a>
+
 		</div>
 
 	</div>
@@ -57,11 +62,10 @@
 	})
 	imageBank.pop();
 	var counter = 0;
-	var counterCopy = 0;
+	var counterGame = 0;
 	var name = $('#browse-name').text();
 	var template = "<img id='browse-hero-img' src='" + imageBank[counter] + "'>";
-	var game = [name, name, name, name + " again", "Sup girl","<pours Courvoisier>", "You're gorgeous", "Let's play a game; everyone likes games", "It's called sex"]
-
+	var game = [name, name, name, "You see where this is going", name + " again", "Sup girl", "Flexing? Me? Never", "<pours Courvoisier>", "You're gorgeous", "Luv me"]
 
 	var renderGame = function(name, array, counter){
 		$('#browse-name').text(game[counter])
@@ -76,22 +80,38 @@
 	renderHero(imageBank, counter)
 
 	$('.browse-action-button').click(function(){
-		console.log("clicked")
 		counter++;
-		counterCopy++;
-		console.log(counter);
-		renderHero(imageBank, counter);
-		renderGame(name, game, counterCopy);
+		counterGame++;
+		if(counter >= 8) {
+			counterGame = 0;
+			$('#browse-div-convert').css("display", "block");
+			renderGame(name, game, counterGame);
+			renderHero(imageBank, counter);
+		} else if(counter == imageBank.length) {
+			counter = 0
+			renderHero(imageBank, counter);
+			renderGame(name, game, counterGame);
+		} else {
+			renderHero(imageBank, counter);
+			renderGame(name, game, counterGame);
+		}
 	});
 
-	$(document).change(function(){
-		if(counter >= 9){
-			counterCopy = 0;
-			$('#browse-div-convert').css("display", "block");
-			renderGame(name, game, counterCopy);
-			renderHero(imageBank, counter);
-		};
-	});
+	// $('.browse-action-button').click(function(){
+	// 	counter++;
+	// 	counterCopy++;
+	// 	renderHero(imageBank, counter);
+	// 	renderGame(name, game, counterGame);
+	// });
+
+	// $(document).change(function(){
+	// 	if(counter >= 9){
+	// 		counterCopy = 0;
+	// 		$('#browse-div-convert').css("display", "block");
+	// 		renderGame(name, game, counterGame);
+	// 		renderHero(imageBank, counter);
+	// 	};
+	// });
 	
 
 	// $.ajax({

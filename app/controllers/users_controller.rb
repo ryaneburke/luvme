@@ -93,6 +93,7 @@ class UsersController < ApplicationController
 #########################	
 	def loading
 		current_user
+		@redirect_url = "#{ROOT}/browse"
 		@referrer_id = session[:referrer_id]
 		render :loading
 	end
